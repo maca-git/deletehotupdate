@@ -1,22 +1,22 @@
 const vscode = require('vscode');
 const fs = require('fs');
-const path =  require('path');
+const path = require('path');
 
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 
+const rootPath = vscode.workspace.rootPath;
+
 function activate(context) {
 
-	let disposable = vscode.commands.registerCommand('deletehotupdate.run', function () {
-
-		const rootPath = vscode.workspace.rootPath;
+	let deleteOnce = vscode.commands.registerCommand('deletehotupdate.deleteOnce', function () {
 
 		if (!rootPath) return;
 
 		fs.readdir(rootPath, (err, files) => {
-			if(err) {
+			if (err) {
 				vscode.window.showInformationMessage(err);
 			}
 
@@ -31,7 +31,21 @@ function activate(context) {
 		});
 	});
 
-	context.subscriptions.push(disposable);
+	let watch = vscode.commands.registerCommand('deletehotupdate.watch', function () {
+		if (!rootPath) return;
+
+		fs.watch(rootPath, { encoding: 'utf-8' }, (eventType, filename) => {
+			if (filename.includes('.hot-update.')) {
+				fs.unlink(path.join(rootPath, filename), (err) => {
+					if (err) throw err;
+					vscode.window.showInformationMessage(`${filename} was deleted`);
+				});
+			}
+		});
+	});
+
+	context.subscriptions.push(deleteOnce);
+	context.subscriptions.push(watch);
 }
 exports.activate = activate;
 

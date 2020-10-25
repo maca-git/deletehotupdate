@@ -1,7 +1,7 @@
 {
 	"name": "deletehotupdate",
-	"displayName": "deleteHotUpdate",
-	"description": "deleted *.hot-update.* files",
+	"displayName": "Delete *.hot-update.* files",
+	"description": "",
 	"version": "0.0.4",
 	"publisher": "macalister",
 	"engines": {
@@ -11,14 +11,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:deletehotupdate.run"
+		"onCommand:deletehotupdate.deleteOnce",
+		"onCommand:deletehotupdate.watch"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "deletehotupdate.run",
-				"title": "delete *.hot-update.*"
+				"command": "deletehotupdate.deleteOnce",
+				"title": "deletehotupdate: Delete once"
+			},
+			{
+				"command": "deletehotupdate.watch",
+				"title": "deletehotupdate: Watch"
 			}
 		]
 	},
