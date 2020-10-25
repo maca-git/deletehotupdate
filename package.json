@@ -2,7 +2,7 @@
 	"name": "deletehotupdate",
 	"displayName": "Delete *.hot-update.* files",
 	"description": "",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"publisher": "macalister",
 	"engines": {
 		"vscode": "^1.50.0"
